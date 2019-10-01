@@ -2,16 +2,22 @@
   'use strict'
 
   const database = {
-    currentPlateNumber: 3,
+    currentPlateNumber: 1,
     plate1: {},
     plate2: {
-      item: null
+      item: null,
+      percent: '0%',
+      progress: '0%'
     },
     plate3: {
-      items: []
+      items: [],
+      percent: '33%',
+      progress: '33%'
     },
     plate4: {
-      item: null
+      item: null,
+      percent: '66%',
+      progress: '66%'
     },
     plate5: {
       email: null,

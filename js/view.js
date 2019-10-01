@@ -7,22 +7,41 @@
 
   api.getPlate = function getPlate(n, data) {
     let plateElement = null
+    let percent = null
+    let progress = null
 
     switch(n) {
       case 1:
          plateElement = textToDom(template1)
          break
+
       case 2:
          plateElement = textToDom(template2)
          const inputElement = plateElement.querySelector(`input[value="${data.item}"]`)
+
+         percent = plateElement.querySelector(`strong.percent`)
+         percent.innerText = data.percent
+
+         progress = plateElement.querySelector('.progress__line-bar')
+         progress.style.width = `${data.progress}`
 
          if(inputElement){
           inputElement.setAttribute('checked', true)
           inputElement.parentElement.classList.add('radio-block--active')
          }
          break
+
       case 3:
          plateElement = textToDom(template3)
+
+         percent = plateElement.querySelector(`strong.percent`)
+         percent.innerText = data.percent
+
+         percent = plateElement.querySelector(`strong.percent`)
+         percent.innerText = data.percent
+
+         progress = plateElement.querySelector('.progress__line-bar')
+         progress.style.width = `${data.progress}`
 
          for(const item of data.items){
           const inputElement = plateElement.querySelector(`input[value="${item}"]`)
@@ -30,12 +49,37 @@
           inputElement.parentElement.classList.add('checkbox-block--active')
          }
          break
+
       case 4:
          plateElement = textToDom(template4)
+         const cardElement = plateElement.querySelector(`input[value="${data.item}"]`)
+
+         percent = plateElement.querySelector(`strong.percent`)
+         percent.innerText = data.percent
+
+         progress = plateElement.querySelector('.progress__line-bar')
+         progress.style.width = `${data.progress}`
+
+         if(cardElement){
+          cardElement.setAttribute('checked', true)
+          cardElement.parentElement.parentElement.classList.add('radio-block--active')
+         }
          break
+
       case 5:
          plateElement = textToDom(template5)
+         const checkboxElement = plateElement.querySelector(`input[type="checkbox"]`)
+         const email = plateElement.querySelector(`input[type="email"]`)
+
+        if(data.agreement === true){
+          checkboxElement.setAttribute('checked', true)
+        }
+
+        if(data.email) {
+          email.value = data.email
+        }
          break
+
       case 6:
          plateElement = textToDom(template6)
          break
@@ -51,9 +95,16 @@
     for(let i = 0; i < nodeList.length; i++) {
       const element = nodeList[i]
 
-      element.addEventListener('click', function(event){
-        api.clickhandler(this, event)
-      })
+      if(element.type === "email") {
+        element.addEventListener('change', function(event){
+          api.clickhandler(this, event)
+        })
+      }
+      else {
+        element.addEventListener('click', function(event){
+          api.clickhandler(this, event)
+        })
+      }
     }
 
     return plateElement
